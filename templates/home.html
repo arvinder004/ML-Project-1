@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Exam Performance Indicator</title>
+
+  <style>
+    :root{
+      --bg-1: #f6f8ff;
+      --bg-2: #e9f0ff;
+      --card-bg: #ffffff;
+      --accent: #3b82f6;
+      --muted: #667085;
+      --success: #10b981;
+      --radius: 12px;
+      --max-width: 760px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      -webkit-font-smoothing:antialiased;
+      color:#0f172a;
+    }
+
+    .page {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+    }
+
+    .card {
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), var(--card-bg));
+      border-radius:var(--radius);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      padding:28px;
+      box-sizing:border-box;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:24px;
+    }
+
+    @media (max-width:900px){
+      .card{ grid-template-columns: 1fr; padding:20px; }
+    }
+
+    .hero {
+      padding-right:8px;
+    }
+
+    h1 {
+      margin:0 0 12px 0;
+      font-size:20px;
+      letter-spacing:-0.2px;
+      color:#0b1220;
+    }
+
+    .lead {
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    form {
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .form-row {
+      display:flex;
+      gap:12px;
+    }
+
+    .form-row .col {
+      flex:1;
+    }
+
+    label.form-label{
+      display:block;
+      font-size:13px;
+      margin-bottom:6px;
+      color:#0f172a;
+      font-weight:600;
+    }
+
+    select.form-control, input.form-control {
+      width:100%;
+      padding:10px 12px;
+      border:1px solid rgba(15,23,42,0.08);
+      border-radius:8px;
+      background:#fff;
+      box-sizing:border-box;
+      outline:none;
+      transition: box-shadow .12s ease, border-color .12s ease;
+      font-size:14px;
+      color:#0f172a;
+    }
+
+    select.form-control:focus, input.form-control:focus {
+      border-color: rgba(59,130,246,0.9);
+      box-shadow: 0 4px 18px rgba(59,130,246,0.08);
+    }
+
+    .btn {
+      display:inline-block;
+      padding:10px 14px;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      transition: transform .08s ease, box-shadow .08s ease;
+    }
+
+    .btn:hover{ transform: translateY(-2px); box-shadow:0 8px 24px rgba(59,130,246,0.14); }
+
+    .meta {
+      font-size:13px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .aside {
+      background: linear-gradient(180deg, rgba(59,130,246,0.06), rgba(59,130,246,0.02));
+      border-radius:10px;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      justify-content:flex-start;
+    }
+
+    .aside h3 {
+      margin:0 0 8px 0;
+      font-size:16px;
+      color:#073665;
+    }
+
+    .result {
+      margin-top:14px;
+      padding:12px;
+      border-radius:8px;
+      background: #eef2ff;
+      color:#0b1220;
+      font-weight:700;
+      text-align:center;
+      box-shadow: inset 0 -1px 0 rgba(11,17,32,0.02);
+    }
+
+    .small {
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    footer.note {
+      margin-top:14px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* Utility */
+    .mb-3{ margin-bottom:10px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="hero">
+        <h1>Student Exam Performance Indicator</h1>
+        <p class="lead">Predict the mathematics score based on demographic features and reading/writing scores.</p>
+
+        <form action="{{ url_for('predict_datapoint')}}" method="post" novalidate>
+          <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-control" name="gender" required>
+              <option class="placeholder" selected disabled value="">Select your Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Race or Ethnicity</label>
+            <select class="form-control" name="ethnicity" required>
+              <option class="placeholder" selected disabled value="">Select Ethnicity</option>
+              <option value="group A">Group A</option>
+              <option value="group B">Group B</option>
+              <option value="group C">Group C</option>
+              <option value="group D">Group D</option>
+              <option value="group E">Group E</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Parental Level of Education</label>
+            <select class="form-control" name="parental_level_of_education" required>
+              <option class="placeholder" selected disabled value="">Select Parent Education</option>
+              <option value="associate's degree">associate's degree</option>
+              <option value="bachelor's degree">bachelor's degree</option>
+              <option value="high school">high school</option>
+              <option value="master's degree">master's degree</option>
+              <option value="some college">some college</option>
+              <option value="some high school">some high school</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <label class="form-label">Lunch Type</label>
+              <select class="form-control" name="lunch" required>
+                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
+                <option value="free/reduced">free/reduced</option>
+                <option value="standard">standard</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label class="form-label">Test preparation Course</label>
+              <select class="form-control" name="test_preparation_course" required>
+                <option class="placeholder" selected disabled value="">Select Test Course</option>
+                <option value="none">None</option>
+                <option value="completed">Completed</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col">
+              <label class="form-label">Writing Score out of 100</label>
+              <input class="form-control" type="number" name="reading_score" placeholder="Enter your Writing score" min="0" max="100" />
+            </div>
+
+            <div class="col">
+              <label class="form-label">Reading Score out of 100</label>
+              <input class="form-control" type="number" name="writing_score" placeholder="Enter your Reading score" min="0" max="100" />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input class="btn" type="submit" value="Predict your Maths Score" />
+            <p class="meta small">Scores should be between 0 and 100. Required fields are enforced by the browser.</p>
+          </div>
+        </form>
+
+        {% if results is not none %}
+          <div class="result">Predicted Maths Score: {{ results }}</div>
+        {% endif %}
+
+        <footer class="note small">Model predictions are indicative only.</footer>
+      </div>
+
+      <aside class="aside">
+        <h3>How it works</h3>
+        <p class="small">The model uses demographic information along with reading and writing scores to estimate the student's maths score. Provide accurate values for better predictions.</p>
+
+        <h3 style="margin-top:12px;">Quick tips</h3>
+        <ul class="small" style="padding-left:18px; margin:8px 0 0 0;">
+          <li>Use valid category options from the dropdowns.</li>
+          <li>Leave no empty required fields.</li>
+          <li>Scores outside 0–100 may produce unexpected results.</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Exam Predictor</title>
+
+  <style>
+    :root{
+      --bg-1: #f6f8ff;
+      --bg-2: #e9f0ff;
+      --card-bg: #ffffff;
+      --accent: #3b82f6;
+      --muted: #667085;
+      --radius: 12px;
+      --max-width: 760px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,body{
+      height:100%;
+      margin:0;
+      background: linear-gradient(135deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      -webkit-font-smoothing:antialiased;
+      color:#0f172a;
+    }
+
+    .page {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+    }
+
+    .card {
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--card-bg));
+      border-radius:var(--radius);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      padding:36px;
+      box-sizing:border-box;
+      text-align:center;
+    }
+
+    h1 {
+      margin:0 0 8px 0;
+      font-size:22px;
+      color:#0b1220;
+    }
+
+    p.lead {
+      margin:8px 0 20px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:12px 18px;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:700;
+      text-decoration:none;
+      transition: transform .08s ease, box-shadow .08s ease;
+      box-shadow: 0 6px 18px rgba(59,130,246,0.12);
+    }
+
+    .btn:hover{ transform: translateY(-3px); box-shadow:0 12px 32px rgba(59,130,246,0.18); }
+
+    a.btn { color: #fff; }
+
+    .meta {
+      margin-top:14px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    footer.note {
+      margin-top:18px;
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Student Exam Performance Indicator</h1>
+      <p class="lead">Estimate a student's mathematics score using demographic and test scores.</p>
+
+      <a class="btn" href="/predictdata">Predict Score</a>
+
+      <div class="meta">Quick and simple — provide the required fields on the next page.</div>
+      <footer class="note">Model predictions are indicative only.</footer>
+    </div>
+  </div>
+</body>
+</html>

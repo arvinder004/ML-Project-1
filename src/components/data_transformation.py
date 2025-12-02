@@ -19,7 +19,7 @@ class DataTransformationConfig:
 class DataTransformation:
     def __init__(self):
         self.data_transformation_config = DataTransformationConfig()
-    
+
     def get_data_transformer_object(self):
         '''
         This function is responsible for data transformation
@@ -38,7 +38,8 @@ class DataTransformation:
             categorical_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder())
+                    ("one_hot_encoder",OneHotEncoder()),
+                    ("scaler",StandardScaler(with_mean=False))
                 ]
             )
 
@@ -57,10 +58,9 @@ class DataTransformation:
             return preprocessor
         except Exception as e:
             raise CustomeException(e, sys)
-        
-    
+
+
     def initiate_data_transformation(self, train_path, test_path):
-        
         try:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
@@ -72,7 +72,7 @@ class DataTransformation:
 
             target_column_name = "math_score"
             numerical_features = ['writing_score', 'reading_score']
-            
+
             input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
 
@@ -98,8 +98,6 @@ class DataTransformation:
                 test_arr,
                 self.data_transformation_config.preprocessor_obj_file_path
             )
-        
+
         except Exception as e:
             raise CustomeException(e, sys)
-            
-        
