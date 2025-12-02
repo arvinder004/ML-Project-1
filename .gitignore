@@ -143,8 +143,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-mlp-env/
-artifacts
+ml-env
 
 # Spyder project settings
 .spyderproject
